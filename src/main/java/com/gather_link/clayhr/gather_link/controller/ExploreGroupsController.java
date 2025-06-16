@@ -1,10 +1,12 @@
 package com.gather_link.clayhr.gather_link.controller;
 
+import com.gather_link.clayhr.gather_link.service.GroupMembershipService;
 import com.gather_link.clayhr.gather_link.service.GroupService;
 import com.gather_link.clayhr.gather_link.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.gather_link.clayhr.gather_link.model.GroupMemberships;
 import com.gather_link.clayhr.gather_link.model.Groups;
 import com.gather_link.clayhr.gather_link.model.Users;
 
@@ -25,6 +27,9 @@ public class ExploreGroupsController {
 	@Autowired
     private UserService userService;
 	
+	@Autowired
+	private GroupMembershipService groupMembershipService;
+	
 	@GetMapping("/explore-groups")
 	public String showGroups(ModelMap model, HttpSession session) {
 		
@@ -44,8 +49,50 @@ public class ExploreGroupsController {
     }
 	
 	@PostMapping("/groups/add")
-    public String addGroup(@ModelAttribute Groups group) {
-        groupService.create(group);
-        return "redirect:/explore-groups";
-    }
+	public String addGroup(@ModelAttribute Groups group, HttpSession session) {
+	    Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+	    if (loggedInUser == null) {
+	        return "redirect:/login";
+	    }
+	    group.setOwner(loggedInUser);
+	    groupService.updateGroup(group);
+	    return "redirect:/explore-groups";
+	}
+	
+	@GetMapping("/groups/create")
+	public String showCreateGroupForm(HttpSession session) {
+	    Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+	    if (loggedInUser == null) {
+	        return "redirect:/login";
+	    }
+	    return "createGroup";
+	}
+	
+	@PostMapping("/groups/{groupId}/join")
+	public String joinGroup(@PathVariable Long groupId, HttpSession session) {
+	    Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+	    if (loggedInUser == null) {
+	        return "redirect:/login";
+	    }
+
+	    Groups group = groupService.getByGroupId(groupId);
+
+	    boolean alreadyJoined = false;
+	    
+		List<GroupMemberships> userMemberships = groupMembershipService.getMembershipsByUser(loggedInUser);
+	    
+	    for (GroupMemberships membership : userMemberships) {
+	        if (membership.getGroup().getGroupId().equals(groupId)) {
+	            alreadyJoined = true;
+	            break;
+	        }
+	    }
+	    
+	    if (!alreadyJoined) {
+	        groupMembershipService.addMember(group, loggedInUser);
+	    }
+
+	    return "redirect:/explore-groups";
+	}
+
 }

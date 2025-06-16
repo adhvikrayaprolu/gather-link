@@ -2,6 +2,7 @@ package com.gather_link.clayhr.gather_link.controller;
 
 import com.gather_link.clayhr.gather_link.model.GroupMemberships;
 import com.gather_link.clayhr.gather_link.model.Groups;
+import com.gather_link.clayhr.gather_link.model.Role;
 import com.gather_link.clayhr.gather_link.model.Users;
 import com.gather_link.clayhr.gather_link.service.GroupMembershipService;
 import com.gather_link.clayhr.gather_link.service.GroupService;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,19 @@ public class MyGroupsController {
         modelMap.addAttribute("group", group);
         modelMap.addAttribute("memberships", memberships);
         return "group-members";
+    }
+    
+    @PostMapping("/groups/{groupId}/members/{userId}/role")
+    public String updateRole(@PathVariable Long groupId, @PathVariable Long userId, @RequestParam("role") Role role, HttpSession session) {
+        Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+        Groups group = groupService.getByGroupId(groupId);
+
+        if (!loggedInUser.getUserId().equals(group.getOwner().getUserId())) {
+            return "redirect:/group-members";
+        }
+
+        groupMembershipService.updateRole(group, userId, role);
+        return "redirect:/groups/" + groupId + "/members";
     }
 
 }

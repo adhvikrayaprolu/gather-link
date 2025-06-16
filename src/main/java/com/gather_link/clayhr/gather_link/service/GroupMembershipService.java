@@ -11,6 +11,7 @@ import com.gather_link.clayhr.gather_link.model.Users;
 import com.gather_link.clayhr.gather_link.repository.GroupMembershipRepository;
 import com.gather_link.clayhr.gather_link.repository.GroupRepository;
 import com.gather_link.clayhr.gather_link.model.Groups;
+import com.gather_link.clayhr.gather_link.model.Role;
 
 @Service
 public class GroupMembershipService {
@@ -55,6 +56,25 @@ public class GroupMembershipService {
 	
 	public List<GroupMemberships> getByGroup(Groups group) {
 	    return groupMembershipRepository.findByGroup(group);
+	}
+	
+	public void addMember(Groups group, Users user) {
+	    GroupMemberships membership = new GroupMemberships();
+	    membership.setGroup(group);
+	    membership.setUser(user);
+	    membership.setRole(Role.MEMBER);
+	    groupMembershipRepository.save(membership);
+	}
+
+	public void updateRole(Groups group, Long userId, Role role) {
+		Users user = new Users();
+		user.setUserId(userId);
+		GroupMemberships membership = groupMembershipRepository.findByGroupAndUser(group, user);
+
+	    if (membership != null) {
+	        membership.setRole(role);
+	        groupMembershipRepository.save(membership);
+	    }
 	}
 
 }
