@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.gather_link.clayhr.gather_link.model.Groups;
 import com.gather_link.clayhr.gather_link.model.Users;
+import com.gather_link.clayhr.gather_link.repository.GroupMembershipRepository;
 import com.gather_link.clayhr.gather_link.repository.GroupRepository;
+import com.gather_link.clayhr.gather_link.repository.PostRepository;
 
 @Service
 public class GroupService {

@@ -48,4 +48,23 @@ public class MyGroupsController {
 
         return "mygroups";
     }
+    
+    @GetMapping("/groups/{groupId}/members")
+    public String showGroupMembers(@org.springframework.web.bind.annotation.PathVariable Long groupId,
+                                   ModelMap modelMap,
+                                   HttpSession session) {
+        Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        Groups group = groupService.getByGroupId(groupId);
+        List<GroupMemberships> memberships = groupMembershipService.getByGroup(group);
+
+        modelMap.addAttribute("group", group);
+        modelMap.addAttribute("memberships", memberships);
+        return "group-members";
+    }
+
 }

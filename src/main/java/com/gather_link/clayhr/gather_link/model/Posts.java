@@ -66,5 +66,16 @@ public class Posts {
     public LocalDateTime getPostCreation() {
         return createdAt;
     }
+    
+    @Transient
+    private String formattedDate;
+
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
 
 }

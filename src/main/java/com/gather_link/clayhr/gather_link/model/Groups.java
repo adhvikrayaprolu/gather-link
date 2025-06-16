@@ -72,7 +72,23 @@ public class Groups {
         return memberCount;
     }
     
+    public void setMemberCount(int count) {
+        memberCount = count;
+    }
+    
     public int getPostCount() {
         return postCount;
+    }
+    
+    public void setPostCount(int count) {
+    	postCount = count;
+    }
+    
+    public void incrementMemberCount() {
+        this.memberCount++;
+    }
+    
+    public void incrementPostCount() {
+        this.postCount++;
     }
 }

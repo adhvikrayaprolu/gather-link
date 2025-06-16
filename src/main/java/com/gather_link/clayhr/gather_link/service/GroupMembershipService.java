@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.gather_link.clayhr.gather_link.model.GroupMemberships;
 import com.gather_link.clayhr.gather_link.model.Users;
 import com.gather_link.clayhr.gather_link.repository.GroupMembershipRepository;
+import com.gather_link.clayhr.gather_link.repository.GroupRepository;
+import com.gather_link.clayhr.gather_link.model.Groups;
 
 @Service
 public class GroupMembershipService {
@@ -16,8 +18,15 @@ public class GroupMembershipService {
 	@Autowired
     private GroupMembershipRepository groupMembershipRepository;
 	
+	@Autowired
+	private GroupRepository groupsRepository;
+	
 	public void create(GroupMemberships membership) {
         groupMembershipRepository.save(membership);
+        
+        Groups group = membership.getGroup();
+        group.setMemberCount(group.getMemberCount() + 1);
+        groupsRepository.save(group);
     }
 	
 	public void delete(Long group_membership_id) {
@@ -43,5 +52,9 @@ public class GroupMembershipService {
 	public List<GroupMemberships> getMembershipsByUser(Users user) {
         return groupMembershipRepository.findByUser(user);
     }
+	
+	public List<GroupMemberships> getByGroup(Groups group) {
+	    return groupMembershipRepository.findByGroup(group);
+	}
 
 }

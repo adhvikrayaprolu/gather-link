@@ -5,8 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.gather_link.clayhr.gather_link.model.Groups;
 import com.gather_link.clayhr.gather_link.model.Posts;
+import com.gather_link.clayhr.gather_link.model.Users;
+import com.gather_link.clayhr.gather_link.service.GroupService;
 import com.gather_link.clayhr.gather_link.service.PostService;
+import com.gather_link.clayhr.gather_link.service.UserService;
+import com.gather_link.clayhr.gather_link.dto.PostRequestDTO;
+import com.gather_link.clayhr.gather_link.exceptions.UserNotFoundException;
 
 
 @RestController
@@ -15,9 +21,29 @@ public class PostController {
 	
 	 @Autowired
 	 private PostService postService;
+	 
+	 @Autowired
+	 private UserService userService;
+	 
+	 @Autowired
+	 private GroupService groupService;
 
 	 @PostMapping
-	 public String create(@RequestBody Posts post) {
+	 public String create(@RequestBody PostRequestDTO dto) {
+		 Groups group = groupService.getByGroupId(dto.getGroupId());
+		 
+		 Users user;
+		 try {
+			 user = userService.getByUserId(dto.getUserId());
+		 } catch (UserNotFoundException e) {
+			 return "User not found";
+		 }
+		 
+		 Posts post = new Posts();
+		 post.setGroup(group);
+		 post.setPostCreator(user);
+		 post.setContent(dto.getContent());
+		 
 		 postService.create(post);
 		 return "success";
 	 }
