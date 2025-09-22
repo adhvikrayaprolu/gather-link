@@ -2,7 +2,7 @@
 <%@ page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    com.gather_link.clayhr.gather_link.model.Users user = (com.gather_link.clayhr.gather_link.model.Users) session.getAttribute("loggedInUser");
+    com.gather_link.model.Users user = (com.gather_link.model.Users) session.getAttribute("loggedInUser");
 %>
 
 <!DOCTYPE html>
