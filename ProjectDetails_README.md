@@ -20,21 +20,23 @@ This is a **Java Spring Boot MVC** application with the following core functiona
 
 Here is a high-level overview of the key directories and files:
 
+```text
 gather-link/
 ├── pom.xml
 ├── mvnw*
 ├── src/
-│ ├── main/
-│ │ ├── java/com/gather_link/
-│ │ │ ├── controller/
-│ │ │ ├── model/
-│ │ │ ├── service/
-│ │ │ └── ...
-│ │ ├── resources/
-│ │ │ ├── static/
-│ │ │ ├── templates/
-│ │ │ └── application.properties
-│ │ └── webapp/WEB-INF/jsp/
+│   ├── main/
+│   │   ├── java/com/gather_link/
+│   │   │   ├── controller/
+│   │   │   ├── model/
+│   │   │   ├── service/
+│   │   │   └── ...
+│   │   ├── resources/
+│   │   │   ├── static/
+│   │   │   ├── templates/
+│   │   │   └── application.properties
+│   │   └── webapp/WEB-INF/jsp/
+```
 
 
 For a deeper breakdown of files:
@@ -61,26 +63,23 @@ For a deeper breakdown of files:
    cd gather-link
 
 2. **Configure the Database**
+   Make sure MySQL is running and a database named `interest_groups` exists.
 
-Make sure MySQL is running and a database named `interest_groups` exists.
+   Update your credentials in:
+   src/main/resources/application.properties
 
-Update your credentials in:
-src/main/resources/application.properties
-
-''
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+   spring.datasource.username=your_username
+   spring.datasource.password=your_password
 
 3. **You can use Maven from the terminal or your IDE:**
 
-./mvnw clean install
+   ./mvnw clean install
 
 4. **Run the Application:**
 
-./mvnw spring-boot:run
+   ./mvnw spring-boot:run
 
 5. **Open in Browser**
 
-Go to:
-
-http://localhost:8080/
+   Go to:
+   http://localhost:8080/
