@@ -46,16 +46,16 @@ For a deeper breakdown of files:
 
 ---
 
-## 🚀 How to Run the Project
+## How to Run the Project
 
-### 🖥️ Prerequisites
+### Prerequisites
 
 - Java 17+
 - Maven 3.6+
 - MySQL installed and configured
 - IDE like **Eclipse** or **IntelliJ IDEA**
 
-### 🔧 Steps
+### Steps
 
 1. **Clone the Repository**
    ```bash
@@ -63,6 +63,7 @@ For a deeper breakdown of files:
    cd gather-link
 
 2. **Configure the Database**
+   ```bash
    Make sure MySQL is running and a database named `interest_groups` exists.
 
    Update your credentials in:
@@ -71,15 +72,15 @@ For a deeper breakdown of files:
    spring.datasource.username=your_username
    spring.datasource.password=your_password
 
-3. **You can use Maven from the terminal or your IDE:**
-
+4. **You can use Maven from the terminal or your IDE:**
+   ```bash
    ./mvnw clean install
 
-4. **Run the Application:**
-
+5. **Run the Application:**
+   ```bash
    ./mvnw spring-boot:run
 
-5. **Open in Browser**
-
+6. **Open in Browser**
+   ```bash
    Go to:
    http://localhost:8080/
