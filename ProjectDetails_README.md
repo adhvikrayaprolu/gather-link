@@ -32,10 +32,14 @@ gather-link/
 │   │   │   ├── service/
 │   │   │   └── ...
 │   │   ├── resources/
-│   │   │   ├── static/
-│   │   │   ├── templates/
 │   │   │   └── application.properties
 │   │   └── webapp/WEB-INF/jsp/
+│   │   │   ├── WEB-INF/jsp/
+│   │   │   │   ├── createGroup.jsp
+│   │   │   │   ├── createPost.jsp
+│   │   │   │   └── ...
+│   │   │   ├── resources/
+│   │   │   │   └── styles.css
 ```
 
 
