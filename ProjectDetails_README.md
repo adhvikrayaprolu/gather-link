@@ -50,6 +50,26 @@ For a deeper breakdown of files:
 
 ---
 
+## Dependency Management: `pom.xml`
+
+This project uses **Maven** as the build tool. The `pom.xml` file, located at the root of the repository, defines all dependencies, build settings, and plugin configurations needed to run the project.
+
+Key configurations include:
+
+- `spring-boot-starter-web` — for building the web app and RESTful APIs
+- `spring-boot-starter-data-jpa` — for database interaction using JPA/Hibernate
+- `mysql-connector-java` — for connecting to the MySQL database
+- `javax.servlet` and JSP-related dependencies — for JSP view rendering
+- Java version and project metadata
+
+**Maven automatically downloads all dependencies** when you build the project (e.g., using `mvn clean install` or via Eclipse/IntelliJ) – if you're cloning the repository for the first time.
+
+You can modify the `pom.xml` file to:
+- Add new libraries
+- Change the Java version
+
+---
+
 ## How to Run the Project
 
 ### Prerequisites
